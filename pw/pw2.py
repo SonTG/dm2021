@@ -1,23 +1,11 @@
 import matplotlib.pyplot as plt
-import json
 import statistics
 import math
+import utils
 
 # read input, parse linecound words
-wc=[]
-with open("yelp-1000.json", "r") as fp:
-    while True:
-        line = fp.readline()
-        if not line:
-            break
-        review = json.loads(line)
-        text = review["text"]
-        wc.append(len(text.split(" ")))
-        lenwc = len(wc)
-        if lenwc % 10 == 0:
-            print(f"read {lenwc} lines")
+wc = utils.loadData()
 
-#print(wc)
 
 wcmax = max(wc)
 wcmin = min(wc)
@@ -41,7 +29,6 @@ for i in range(wcmin, wcmax):
     dist.append(normval)
 
 normmax = max(dist)
-print(normmax)
 dist = [normval * (600 / normmax) for normval in dist]
 plt.plot(range(wcmin, wcmax), dist)
 
